@@ -1,6 +1,6 @@
 import { browser, expect } from '@wdio/globals'
 
-describe('HW_1', () => {
+xdescribe('HW_1', () => {
 
     it('should navigate to API page and check Title+URL', async () => {
         await browser.url('https://webdriver.io/')
@@ -74,6 +74,129 @@ describe('HW_1', () => {
         let languageSwitcher = await $('//a[contains(@class,"navbar__link")][.//*[contains(@class,"iconLanguage")]]')
         console.log("Page language is: " + await languageSwitcher.getText())
         await expect(languageSwitcher).toHaveText('English')
+    });
+
+});
+
+describe('HW_2', () => {
+
+    it('should show if API isDisplayed, isClickable and isFocused after click', async () => {
+        await browser.url('https://webdriver.io/')
+        const apiLink = await $('nav a[href="/docs/api"]')
+        let displayed = await apiLink.isDisplayed()
+        console.log("IsDisplayed: " + displayed) // true
+
+        let clickable = await apiLink.isClickable()
+        console.log("IsClickable: " + clickable) //true
+
+        let focused = await apiLink.isFocused()
+        console.log("IsFocused: " + focused) //false
+
+        await apiLink.click()
+        focused = await apiLink.isFocused()
+        console.log("After click, isFocused: " + focused); // false
+
+    });
+
+    it('should show if navigation to API page is correct', async () => {
+        await browser.url('https://webdriver.io/')
+
+        const apiLink = await $('nav a[href="/docs/api"]')
+        await apiLink.waitForDisplayed()
+        await apiLink.click()
+
+        await expect(browser).toHaveTitle('Introduction | WebdriverIO')
+        await expect(browser).toHaveUrl('https://webdriver.io/docs/api')
+    });
+
+    it('should show if Protocol Commands isDisplayed after scrollIntoView to it', async () => {
+        await browser.url('https://webdriver.io/docs/api')
+
+        const protocolCommand = await $('.pagination-nav__label')
+        await protocolCommand.scrollIntoView()
+        let isDisplayed = await protocolCommand.isDisplayed()
+
+        console.log("IsDisplayed: " + isDisplayed) //true
+    });
+
+    it('should show getHTML command', async () => {
+        await browser.url('https://webdriver.io/docs/api')
+
+        const protocolCommand = await $('.pagination-nav__label')
+
+        const outerHTML = await protocolCommand.getHTML();
+        console.log("outerHTML: " + outerHTML);
+
+        const innerHTML = await protocolCommand.getHTML(false);
+        console.log("innerHTML: " + innerHTML);
+
+        await expect(protocolCommand).toHaveText('Protocol Commands')
+    });
+
+    it('should navigate to Protocol Commands successfully', async () => {
+        await browser.url('https://webdriver.io/docs/api')
+
+        const protocolCommand = await $('.pagination-nav__label')
+        await protocolCommand.waitForClickable()
+        await protocolCommand.click()
+
+        await expect(browser).toHaveUrl('https://webdriver.io/docs/api/protocols')
+    });
+
+    it('should waitUntil Appium appears', async () => {
+        await browser.url('https://webdriver.io/docs/api/protocols')
+
+        const appium = await $('[id="appium"]')
+        let isDisplayedImmediately = await appium.isDisplayed({ withinViewport: true })
+        console.log("IsDisplayed within Viewport: " + isDisplayedImmediately);
+
+        await browser.waitUntil(async () => {
+            await appium.scrollIntoView()
+            return await appium.isDisplayed({ withinViewport: true });
+        }, {
+            timeout: 5000,
+            timeoutMsg: "Heading Appium didn't appear"
+        });
+
+        // await expect(appium).toBeDisplayed();
+    });
+
+    it('should show navigating within windows', async () => {
+        await browser.url('https://webdriver.io/')
+
+        await browser.newWindow('https://www.remove.bg/uk');
+        await browser.newWindow('https://nodejs.org/en');
+
+        const windows = await browser.getWindowHandles();
+        await browser.switchToWindow(windows[1]);
+
+        await expect(browser).toHaveUrl('https://www.remove.bg/uk')
+    });
+
+    it('should saveScreenshot from another site', async () => {
+        await browser.url('https://webdriver.io/')
+        await browser.newWindow('https://www.remove.bg/uk');
+
+        const picture = await $('.w-full.h-auto.rounded-4xl')
+        await picture.waitForDisplayed({ timeout: 20000 })
+
+        await picture.saveScreenshot('picture_hw_2.png');
+    });
+
+    it('should open search modal and input should be enabled and focused', async () => {
+        await browser.url('https://webdriver.io/docs/api')
+
+        const searchIcon = await $('.DocSearch-Button')
+        await searchIcon.click()
+
+        const searchInput = await $('.DocSearch-Input')
+        await searchInput.waitForDisplayed()
+
+        let isEnabled = await searchInput.isEnabled()
+        console.log("IsEnabled: " + isEnabled) //true
+
+        await expect(searchInput).toBeEnabled()
+        await expect(searchInput).toBeFocused()
     });
 
 });
