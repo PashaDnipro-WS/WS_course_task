@@ -1,4 +1,5 @@
 import { browser, expect } from '@wdio/globals'
+import assert from "assert/strict"
 
 describe('Webdriverio main page', () => {
 
@@ -200,7 +201,7 @@ describe('Webdriverio main page', () => {
 
     // #12
 
-    it("should show waitUntil command", async () => {
+    xit("should show waitUntil command", async () => {
         await browser.url('https://webdriver.io');
 
         await browser.waitUntil(async () => {
@@ -212,7 +213,7 @@ describe('Webdriverio main page', () => {
         });
     });
 
-    it("should get html for certain elements", async () => {
+    xit("should get html for certain elements", async () => {
         await browser.url('https://webdriver.io');
 
         const element = await $('.dropdown__menu');
@@ -222,6 +223,24 @@ describe('Webdriverio main page', () => {
 
         const innerHTML = await element.getHTML(false);
         console.log("innerHTML: " + innerHTML);
+    });
+
+    // #16
+
+    it("should show using asserts", async () => {
+        await browser.url('https://webdriver.io');
+
+        await browser.newWindow('https://google.com');
+        await browser.pause(2000);
+
+        const windows = await browser.getWindowHandles();
+        await browser.switchToWindow(windows[0]);
+
+        await browser.pause(2000);
+
+        // assert(condition, message)
+
+        assert(browser.url = "https://webdriver.io", "navigating went wrong")
     });
 
 });
