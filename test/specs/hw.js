@@ -1,4 +1,5 @@
 import { browser, expect } from '@wdio/globals'
+import assert from "assert/strict"
 
 xdescribe('HW_1', () => {
 
@@ -201,7 +202,7 @@ xdescribe('HW_2', () => {
 
 });
 
-describe('HW_3_selectors', () => {
+xdescribe('HW_3_selectors', () => {
 
     it('should display the Convey an Image button section', async () => {
         await browser.url('https://www.remove.bg/uk')
@@ -250,6 +251,101 @@ describe('HW_3_selectors', () => {
         await productHuntLink.scrollIntoView()
 
         await expect(productHuntLink).toHaveAttribute('width', '242')
+    });
+
+});
+
+describe('HW_4_test_cases', () => {
+
+    it('should open compare all features page from Pricing', async () => {
+        await browser.url('https://github.com/')
+
+        const pricingLink = await $('a[href="https://github.com/pricing"]')
+        await pricingLink.waitForClickable()
+        await pricingLink.click()
+
+        await expect(browser).toHaveUrl('https://github.com/pricing')
+
+        const compare = await $('//div[contains(@class,"tmp-mt-6")]//a[contains(@class,"h5-mktg")]')
+        await compare.scrollIntoView()
+        await compare.waitForClickable()
+        await compare.click()
+
+        const featureName = await $('//div[@role="columnheader"]//div[contains(@class,"color-bg-subtle")]//h2')
+        await expect(featureName).toBeDisplayed()
+    });
+
+    it('should open Trending Developers page from Open Source menu', async () => {
+        await browser.url('https://github.com/')
+
+        const openSourceLink = await $('//button[contains(@class, "js-details-target") and contains(., "Open Source")]')
+        await openSourceLink.moveTo()
+
+        const trendingLink = await $('a[href="https://github.com/trending"]')
+        await trendingLink.waitForClickable()
+        await trendingLink.click()
+
+        await expect(browser).toHaveUrl('https://github.com/trending')
+
+        const developersTab = await $('//a[@class="js-selected-navigation-item subnav-item"]')
+        await developersTab.waitForClickable()
+        await developersTab.click()
+
+        await expect(browser).toHaveUrl('https://github.com/trending/developers')
+    });
+
+    it('should allow entering email into the email field', async () => {
+        await browser.url('https://github.com/')
+
+        const inputEmailField = await $('//div[@class = "CtaForm"]//input[@type="email"]')
+        await inputEmailField.waitForDisplayed()
+        await inputEmailField.click()
+
+        await inputEmailField.setValue('example@gmail.com')
+
+        await expect(inputEmailField).toHaveValue('example@gmail.com')
+    });
+
+    it('should display CI/CD information in Documentation', async () => {
+        await browser.url('https://github.com/')
+
+        const platformLink = await $('//button[contains(@class, "js-details-target") and contains(., "Platform")]')
+        await platformLink.moveTo()
+
+        const docLink = await $('//a[@href="https://docs.github.com"]')
+        await docLink.waitForClickable()
+        await docLink.click()
+
+        const cicd = await $('//*[contains(., "CI/CD")]')
+        await cicd.waitForDisplayed()
+
+        await expect(cicd).toBeDisplayed()
+    });
+
+    it('should open Copilot plans page and start plan selection', async () => {
+        await browser.url('https://github.com/')
+
+        const platformLink = await $('//button[contains(@class, "js-details-target") and contains(., "Platform")]')
+        await platformLink.moveTo()
+
+        const copilotLink = await $('a[href="https://github.com/features/copilot"]')
+        await copilotLink.click()
+
+        await expect(browser).toHaveUrl('https://github.com/features/copilot')
+
+        const buttonSeePlans = await $('a[href*="/features/copilot/plans"]')
+        await buttonSeePlans.waitForDisplayed()
+        await buttonSeePlans.click()
+
+        await expect(browser).toHaveUrl('https://github.com/features/copilot/plans')
+
+        const buttonsGetStarted = await $$('.Primer_Brand__PricingOptions-module__PricingOptions__actions___e2W5P')
+
+        await buttonsGetStarted[0].waitForClickable()
+        await buttonsGetStarted[0].click()
+
+        await expect(browser).not.toHaveUrl('https://github.com/features/copilot/plans')
+        //assert(browser.url != 'https://github.com/features/copilot/plans','Stayed on the same page')
     });
 
 });
