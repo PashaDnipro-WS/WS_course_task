@@ -78,7 +78,7 @@ xdescribe('HW_1', () => {
 
 });
 
-describe('HW_2', () => {
+xdescribe('HW_2', () => {
 
     it('should show if API isDisplayed, isClickable and isFocused after click', async () => {
         await browser.url('https://webdriver.io/')
@@ -197,6 +197,59 @@ describe('HW_2', () => {
 
         await expect(searchInput).toBeEnabled()
         await expect(searchInput).toBeFocused()
+    });
+
+});
+
+describe('HW_3_selectors', () => {
+
+    it('should display the Convey an Image button section', async () => {
+        await browser.url('https://www.remove.bg/uk')
+
+        const buttonConveyImage = await $('//div[@class="w-full flex flex-col sm:justify-center sm:items-center sm:gap-8 sm:pt-36 sm:pb-16 rounded-4xl bg-white shadow-2xl"]//span[@class="flex !px-3"]')
+
+        await expect(buttonConveyImage).toBeDisplayed()
+    });
+
+    it('should focus the People tab after click', async () => {
+        await browser.url('https://www.remove.bg/uk')
+
+        const buttonPeople = await $('#headlessui-tabs-tab-2')
+        await buttonPeople.click()
+
+        await expect(buttonPeople).toBeFocused()
+    });
+
+    it('should open the Magic Brush page after clicking the tool card', async () => {
+        await browser.url('https://www.remove.bg/uk')
+
+        const toolMagicBrush = await $('//a[contains(@class, "duration-150") and contains(@class, "!p-8")]//span[contains(@class, "text-typo")]')
+
+        await toolMagicBrush.scrollIntoView()
+        await toolMagicBrush.waitForClickable()
+        await toolMagicBrush.click()
+
+        await expect(browser).toHaveUrl('https://www.remove.bg/f/magic-brush')
+    });
+
+    it('should focus the email input after click', async () => {
+        await browser.url('https://www.remove.bg/uk')
+
+        const inputEmail = await $('#email')
+        await inputEmail.scrollIntoView()
+        await inputEmail.isEnabled()
+        await inputEmail.click()
+
+        await expect(inputEmail).toBeFocused()
+    });
+
+    it('should display the Product Hunt image with width 242', async () => {
+        await browser.url('https://www.remove.bg/uk')
+
+        const productHuntLink = await $('//a[contains(@href, "producthunt")]//img')
+        await productHuntLink.scrollIntoView()
+
+        await expect(productHuntLink).toHaveAttribute('width', '242')
     });
 
 });
