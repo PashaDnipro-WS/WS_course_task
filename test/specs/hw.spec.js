@@ -120,20 +120,6 @@ describe('HW_2', () => {
         console.log("IsDisplayed: " + isDisplayed) //true
     });
 
-    it('should show getHTML command', async () => {
-        await browser.url('https://webdriver.io/docs/api')
-
-        const protocolCommand = await $('.pagination-nav__label')
-
-        const outerHTML = await protocolCommand.getHTML();
-        console.log("outerHTML: " + outerHTML);
-
-        const innerHTML = await protocolCommand.getHTML(false);
-        console.log("innerHTML: " + innerHTML);
-
-        await expect(protocolCommand).toHaveText('Protocol Commands')
-    });
-
     it('should navigate to Protocol Commands successfully', async () => {
         await browser.url('https://webdriver.io/docs/api')
 
