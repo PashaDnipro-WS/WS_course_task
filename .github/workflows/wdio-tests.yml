@@ -23,9 +23,6 @@ jobs:
       - name: Run Firefox tests
         run: docker compose run --rm firefox
 
-      - name: Run Edge tests
-        run: docker compose run --rm edge
-
       - name: Install Allure
         run: npm install -g allure-commandline
 

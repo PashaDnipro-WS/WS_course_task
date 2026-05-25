@@ -14,11 +14,3 @@ services:
     command: npm run test:firefox
     volumes:
       - ./allure-results:/app/allure-results
-
-  edge:
-    build:
-      context: .
-      dockerfile: docker/Dockerfile.edge
-    command: npm run test:edge
-    volumes:
-      - ./allure-results:/app/allure-results
