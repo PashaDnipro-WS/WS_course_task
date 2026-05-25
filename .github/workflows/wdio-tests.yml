@@ -5,6 +5,9 @@ on:
     branches: [ main ]
   workflow_dispatch:
 
+permissions:
+  contents: write
+
 jobs:
   test:
     runs-on: ubuntu-latest
@@ -29,7 +32,7 @@ jobs:
       - name: Run Firefox tests
         run: docker compose run --rm firefox
         continue-on-error: true
-        
+
       - name: Install project dependencies
         run: npm install
 
