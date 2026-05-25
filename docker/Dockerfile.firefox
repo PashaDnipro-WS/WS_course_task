@@ -3,7 +3,8 @@ FROM selenium/standalone-firefox:134.0-20250323
 USER root
 
 RUN apt-get update && \
-    apt-get install -y nodejs npm
+    apt-get install -y nodejs npm && \
+    rm -rf /var/lib/apt/lists/*
 
 WORKDIR /app
 
@@ -12,7 +13,9 @@ RUN npm install
 
 COPY . .
 
-RUN chown -R seluser:seluser /app
+RUN mkdir -p /app/allure-results && \
+    chown -R seluser:seluser /app && \
+    chmod -R 777 /app/allure-results
 
 USER seluser
 
