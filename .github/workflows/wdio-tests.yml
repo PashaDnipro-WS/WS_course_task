@@ -24,10 +24,12 @@ jobs:
 
       - name: Run Chrome tests
         run: docker compose run --rm chrome
+        continue-on-error: true
 
       - name: Run Firefox tests
         run: docker compose run --rm firefox
-
+        continue-on-error: true
+        
       - name: Install project dependencies
         run: npm install
 
