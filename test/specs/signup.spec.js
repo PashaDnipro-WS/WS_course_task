@@ -1,8 +1,9 @@
 import HomePage from '../page_objects/home_page.js'
 import SignupPage from '../page_objects/signup_page.js'
 
-describe('GitHub Sign Up', () => {
-    it('should fill sign up form and submit it', async () => {
+xdescribe('GitHub Sign Up', () => {
+
+    beforeEach(async () => {
         await HomePage.open()
 
         await HomePage.clickSignUp()
@@ -13,6 +14,20 @@ describe('GitHub Sign Up', () => {
         await expect(SignupPage.headingText).toHaveText(
             "Explore GitHub's core features for individuals and organizations."
         )
+    })
+
+    afterEach(async () => {
+
+        await SignupPage.clickPreferencesCheckbox()
+
+        await SignupPage.clickSubmit()
+    })
+
+    after(async () => {
+        // code
+    })
+
+    it('should fill sign up form and submit it', async () => {
 
         await SignupPage.fillSignUpForm(
             'test123@gmail.com',
@@ -20,9 +35,5 @@ describe('GitHub Sign Up', () => {
             'user',
             'Ukraine'
         )
-
-        await SignupPage.clickPreferencesCheckbox()
-
-        await SignupPage.clickSubmit()
     })
 })

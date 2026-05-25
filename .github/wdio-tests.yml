@@ -1,0 +1,39 @@
+name: WebdriverIO Tests
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Build Docker images
+        run: docker compose build
+
+      - name: Run Chrome tests
+        run: docker compose run --rm chrome
+
+      - name: Run Firefox tests
+        run: docker compose run --rm firefox
+
+      - name: Run Edge tests
+        run: docker compose run --rm edge
+
+      - name: Install Allure
+        run: npm install -g allure-commandline
+
+      - name: Generate Allure report
+        run: npm run allure:generate
+
+      - name: Deploy Allure report to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./allure-report

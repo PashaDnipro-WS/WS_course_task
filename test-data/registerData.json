@@ -1,0 +1,29 @@
+[
+{
+    "email": "test",
+    "password": "",
+    "birthdate": "17-08-1995",
+    "error_msg_1": "Hmm...that doesn't look like an email address."
+},
+
+{
+    "email": "test@gmail.com",
+    "password": "",
+    "birthdate": "17-08-1995",
+    "error_msg_2": "Your password is too short! You need 8+ characters."
+},
+
+{
+    "email": "test@gmail.com",
+    "password": "12345678910",
+    "birthdate": "17-08-2026",
+    "error_msg_3": "Oops! Please use a valid age to sign up."
+},
+
+{
+    "email": "test@gmail.com",
+    "password": "12345678910",
+    "birthdate": "17-08-1995",
+    "error_msg_4": "We protected your account"
+}
+]

@@ -1,0 +1,4 @@
+{
+  "using": "xpath",
+  "value": "//div[contains(@class,\"tmp-mt-6\")]//a[contains(@class,\"h5-mktg\")]"
+}

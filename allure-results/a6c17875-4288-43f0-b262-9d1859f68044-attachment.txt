@@ -1,0 +1,2 @@
+element click intercepted: WebDriverError: element click intercepted: Element <input id="email" type="email" class="peer w-full block text-base text-typo border-0 !pt-4 !pb-1.5 !px-2.5 focus:ring-0 focus:outline-none md:!pr-36"> is not clickable at point (1198, 23). Other element would receive the click: <ul class="hidden xl:flex flex-grow items-center gap-1 xl:gap-1 my-0">...</ul>
+  (Session info: chrome=134.0.6998.165) when running "element/f.BD99F9A74E9D06233710AAB4E35B951E.d.EF12DA1953690517326889A6DF89DAEA.e.137/click" with method "POST"

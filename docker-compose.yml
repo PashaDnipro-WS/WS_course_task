@@ -1,0 +1,24 @@
+services:
+  chrome:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.chrome
+    command: npm run test:chrome
+    volumes:
+      - ./allure-results:/app/allure-results
+
+  firefox:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.firefox
+    command: npm run test:firefox
+    volumes:
+      - ./allure-results:/app/allure-results
+
+  edge:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.edge
+    command: npm run test:edge
+    volumes:
+      - ./allure-results:/app/allure-results
