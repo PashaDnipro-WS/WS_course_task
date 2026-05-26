@@ -1,0 +1,1 @@
+stale element reference: WebDriverError: The element with the reference 77e8b6e3-0a79-435c-8c64-f2abd9e4dd49 is stale; either its node document is not the active document, or it is no longer connected to the DOM when running "element/77e8b6e3-0a79-435c-8c64-f2abd9e4dd49/rect" with method "GET"
